@@ -25,6 +25,7 @@ python manage.py startapp blog
 * * *
 
 ## Steps:
+### Setup html template response
 - create urls.py
 - create a route in views.py
 - add an item to project urls.py to forward to app urls
@@ -35,5 +36,29 @@ python manage.py startapp blog
 - use {% for post in posts %} to start for loop and {% endfor %} to end (jinja style)
 - variables are accessed with doubly curly {{post.title}}
 - use template blocks to reuse other templates (template inheritance)
+- create folder static/blog for statics
+- {% load static %} on top of file to load static css
+- use the name in urls.py for the hrefs
+- set up the admin panel, first we need to set up the table in DB, python manage.py migrate
+- then create superuser, python manage.py createsuperuser
+### Models
+- creating models for our ORM in models.py
+- Generate SQL code from model: python manage.py makemigrations
+- check the generated SQL: python manage.py sqlmigrate blog 0001
+- run the queries against our DB: python manage.py migrate
+- query the DB through the models: python manage.py shell
+- register model in admin panel, in admin.py put a line: admin.site.register(Post)
+### Models with shell
+- import the models in the shell, from blog.models import Post, from django.contribu.auth.models import User
+- get all users: User.objects.all()
+- user = User.objects.filter(username='mario').first()
+- user = User.objects.get(id=1)
+- post_1 = Post(Post(title='In search of a princess', content='Still searching :)', author=user))
+- post_1.save() 
+- define dunder (double underscore) methods/magic methods like - def __str__(self):return self.title - to print Object
+- user.post_set.all() and user.post_set.create(title="A", content="AAAA") immediately use the user
+### Models in view
+- use Post.objects.all() in context argument
+- use {{ post.date_posted|date:'d M, Y' }} to format date
 
 
