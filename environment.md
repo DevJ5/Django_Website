@@ -65,5 +65,9 @@ python manage.py startapp blog
 - add it to installed apps in project settings.py 'users.apps.UsersConfig'
 - create a register.html view in templates/users and import UserCreationForm
 - user django csrf token {% csrf_token %} and form {{form.as_p}}
+- implement a one time success message in register function and base.html and redirect to home
+- create a forms.py that extends UserCreationForm to add our own custom fields
+- install django-crispy-forms to add custom css to our forms
+- add {% load crispy_forms_tags %} to our register.html and add crispy filter to form (form|crispy)
 
 
