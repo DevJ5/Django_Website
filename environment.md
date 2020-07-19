@@ -49,7 +49,7 @@ python manage.py startapp blog
 - query the DB through the models: python manage.py shell
 - register model in admin panel, in admin.py put a line: admin.site.register(Post)
 ### Models with shell
-- import the models in the shell, from blog.models import Post, from django.contribu.auth.models import User
+- import the models in the shell, from blog.models import Post, from django.contrib.auth.models import User
 - get all users: User.objects.all()
 - user = User.objects.filter(username='mario').first()
 - user = User.objects.get(id=1)
@@ -60,5 +60,10 @@ python manage.py startapp blog
 ### Models in view
 - use Post.objects.all() in context argument
 - use {{ post.date_posted|date:'d M, Y' }} to format date
+### Create users app for signup/login
+- python manage.py startapp users
+- add it to installed apps in project settings.py 'users.apps.UsersConfig'
+- create a register.html view in templates/users and import UserCreationForm
+- user django csrf token {% csrf_token %} and form {{form.as_p}}
 
 
