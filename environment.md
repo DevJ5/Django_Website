@@ -93,6 +93,38 @@ document_root=settings.MEDIA_ROOT)
 - it also needs to be saved, so create another @receiver function named save_profile
 - **kwargs is just any amount of keyword arguments
 - Finally in users apps.py in the UsersConfig add a method ready that imports the users.signals
+### Update user profile
+- create 2 new form function in forms.py
+- set multipart/formdata for the profile picture and use request.FILES
+- to resize the uploaded picture to a thumbnail use Pillow (PIL)
+- overwrite the save method: call its super and then resize image
+### Class based list view and detail view
+- in views.py create class based views that inherit ListView/ DetailView
+- add them to urls.py
+- for detail view use integer primary keys in the path, path('post/<int:pk>/', PostDetailView.as_view(), name='post-detail')
+- Django automatically looks at <model>_detail.html for the template
+- use object as variable in detail template
+### Create Posts
+- create a url pattern 
+- First create a PostCreateView class that inherits CreateView
+- the default template name for this is post_form.html, this will be the same for an UpdateView
+- then overwrite the super is_valid() method to add the logged in User FK as author
+- then after POST request is done, we need a redirect to this post. Use get_absolute_url for that in our model
+- use reverse instead of redirect, reverse makes sure that we get the id correct
+- we cant use login require annotation on classes, so we use a mixin instead: LoginRequiredMixin
+### Update Posts
+- create url pattern: path('post/<int:pk>/update/', PostUpdateView.as_view(), name='post-update')
+- create a view PostUpdateView
+- set it up so only authorized users can update with a UserPassesTestMixin
+- test_func() should return True if self.request.user == post.author
+- this update view uses the same post_form.html
+### Delete Posts
+- create url pattern: path('post/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete')
+- create a view PostDeleteView
+- set up authorization and login mixins
+- add a test_func
+- add a success_url for redirection after deletion
+- use template called post_confirm_delete
 
 
 
