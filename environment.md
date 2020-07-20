@@ -55,12 +55,12 @@ python manage.py startapp blog
 - user = User.objects.get(id=1)
 - post_1 = Post(Post(title='In search of a princess', content='Still searching :)', author=user))
 - post_1.save() 
-- define dunder (double underscore) methods/magic methods like - def __str__(self):return self.title - to print Object
+- define dunder (double underscore) methods/magic methods like - def __str__(self):return self.title - to print object
 - user.post_set.all() and user.post_set.create(title="A", content="AAAA") immediately use the user
 ### Models in view
 - use Post.objects.all() in context argument
 - use {{ post.date_posted|date:'d M, Y' }} to format date
-### Create users app for signup/login
+### Create users app for signup
 - python manage.py startapp users
 - add it to installed apps in project settings.py 'users.apps.UsersConfig'
 - create a register.html view in templates/users and import UserCreationForm
@@ -69,5 +69,30 @@ python manage.py startapp blog
 - create a forms.py that extends UserCreationForm to add our own custom fields
 - install django-crispy-forms to add custom css to our forms
 - add {% load crispy_forms_tags %} to our register.html and add crispy filter to form (form|crispy)
+### Login
+- auth_views.LoginView.as_view(template_name='users/login.html'), handles the login logic for us
+- still have to create a login template (use cripsy forms again)
+- logging in will redirect default to account/profile, change this in settings: LOGIN_REDIRECT_URL = 'blog-home'
+- add a profile view that renders profile.html
+- add @login_required annotation
+- in settings add LOGIN_URL = 'login' otherwise going to profile when logged out, will redirect to accounts/login
+### Profile model with image
+- create a profile model to extend our user model with a profile picture (user doesnt have that)
+- use OneToOneField and ImageField
+- python manage.py makemigrations and then do them with python manage.py migrate
+- to view/create the profiles on admin page, register this Profile model in admin.py
+- add a MEDIA_ROOT and MEDIA_URL in settings.py where the images will go, otherwise they will default to a root folder
+- {{user.profile.image.url}} to use the image
+- to serve the image file in development we can add if settings.DEBUG:urlpatterns += static(settings.MEDIA_URL,
+document_root=settings.MEDIA_ROOT)
+- For production this needs to be different, look up in django docs
+- drop a default.jgp image in the media folder
+### Signal to create a profile upon user creation
+- make file signals.py
+- use @receiver(post_save, sender=User) decorator. When a User is saved send post_save signal, this signal is received by the receiver and this receiver runs create_profile function
+- it also needs to be saved, so create another @receiver function named save_profile
+- **kwargs is just any amount of keyword arguments
+- Finally in users apps.py in the UsersConfig add a method ready that imports the users.signals
+
 
 
