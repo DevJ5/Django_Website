@@ -125,6 +125,13 @@ document_root=settings.MEDIA_ROOT)
 - add a test_func
 - add a success_url for redirection after deletion
 - use template called post_confirm_delete
-
+### Add buttons to delete/update routes
+- add an if statement if the user == object.author
+- add buttons that take the object id as argument
+### Pagination
+- from django.core.paginator import Paginator
+- set paginate_by attribute
+- create first, previous, some pages in the middle, next, last buttons with some simple for loop and if statements
+- create a class view (with get_queryset) and a template page for the posts by a certain user
 
 
