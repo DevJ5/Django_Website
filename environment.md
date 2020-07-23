@@ -1,5 +1,5 @@
 **Create virtual env**
-virtualen django_env
+virtualenv django_env
 
 **Activate virtual env**
 source django_env/Scripts/activate
