@@ -133,5 +133,11 @@ document_root=settings.MEDIA_ROOT)
 - set paginate_by attribute
 - create first, previous, some pages in the middle, next, last buttons with some simple for loop and if statements
 - create a class view (with get_queryset) and a template page for the posts by a certain user
+### Reset password email
+- set up environment variable for username, password
+- in setttings add smtp server, port, username, password, tls enabled
+- add template for password_reset -> password_reset_done -> password_reset_confirm -> password_reset_complete 
+- care for _ and - in url patterns
+
 
 
