@@ -138,6 +138,10 @@ document_root=settings.MEDIA_ROOT)
 - in setttings add smtp server, port, username, password, tls enabled
 - add template for password_reset -> password_reset_done -> password_reset_confirm -> password_reset_complete 
 - care for _ and - in url patterns
+  
+ Host:
+ Change ip address in settings.py
+ python3 manage.py runserver 0.0.0.0:8000
 
 
 
